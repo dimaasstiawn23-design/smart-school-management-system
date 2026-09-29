@@ -1,0 +1,74 @@
+services:
+  # 1. Database Relasional Utama
+  postgres:
+    image: postgres:15-alpine
+    container_name: school_postgres
+    restart: always
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - school-network
+
+  # 2. Cache & Message Broker
+  redis:
+    image: redis:7-alpine
+    container_name: school_redis
+    restart: always
+    ports:
+      - "6379:6379"
+    networks:
+      - school-network
+
+  # 3. Face Recognition Microservice (Python / FastAPI)
+  face-recognition:
+    build:
+      context: ./face-recognition
+      dockerfile: Dockerfile
+    container_name: school_face_recognition
+    restart: always
+    volumes:
+      - ./face-recognition:/app
+    environment:
+      - PYTHONUNBUFFERED=1
+    networks:
+      - school-network
+    # Port sengaja tidak diekspos ke host luar, hanya bisa diakses oleh backend via internal network
+  
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: school_backend
+    restart: always
+    ports:
+      - "5000:5000"
+    environment:
+      - PORT=5000
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_USER=${POSTGRES_USER}
+      - DB_PASSWORD=${POSTGRES_PASSWORD}
+      - DB_NAME=${POSTGRES_DB}
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - FACE_RECOGNITION_URL=http://face-recognition:8000
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+    networks:
+      - school-network  
+
+# Definisi Docker Network Bersama
+networks:
+  school-network:
+    driver: bridge
+
+# Definisi Persistent Volume untuk Database agar data tidak hilang saat container mati
+volumes:
+  postgres_data:
