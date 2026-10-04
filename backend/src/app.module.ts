@@ -1,6 +1,8 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller'; // <--- Impor controller
+import { UsersModule } from './users/users.module'; // <--- Impor UsersModule
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -15,6 +17,8 @@ import { AppController } from './app.controller'; // <--- Impor controller
       autoLoadEntities: true, // Otomatis membaca entity tabel yang kita buat nanti
       synchronize: true, // Otomatis membuat tabel di database saat development (matikan saat production)
     }),
+    UsersModule, // <--- Daftarkan di sini
+    AuthModule, // Pastikan ini ada di dalam array imports
   ],
   controllers: [AppController], // <--- Daftarkan di sini
   providers: [],
