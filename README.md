@@ -7,6 +7,7 @@ Enterprise-grade backend system built with NestJS, TypeScript, PostgreSQL, and D
 * **Language:** TypeScript
 * **Database:** PostgreSQL & TypeORM
 * **Authentication:** Passport.js, JWT, bcrypt
+* **Authorization:** Role-Based Access Control (RBAC) via Custom Guards & Decorators
 * **Containerization:** Docker & Docker Compose
 
 ---
@@ -17,7 +18,7 @@ Enterprise-grade backend system built with NestJS, TypeScript, PostgreSQL, and D
 * [x] Initialized Dockerized NestJS and PostgreSQL environment.
 * [x] Configured TypeORM database connection and entity synchronization.
 
-### **Phase 2: User Management & RBAC (Completed)**
+### **Phase 2: User Management (Completed)**
 * [x] Created `User` and `Student` entities with proper relations.
 * [x] Implemented secure user registration (`POST /users/register`) with password hashing (`bcrypt`).
 * [x] Added input validation using `class-validator` and `class-transformer`.
@@ -26,6 +27,11 @@ Enterprise-grade backend system built with NestJS, TypeScript, PostgreSQL, and D
 * [x] Implemented `AuthModule`, `AuthService`, and `AuthController`.
 * [x] Created secure login endpoint (`POST /auth/login`) with credential verification.
 * [x] Integrated `Passport-JWT` strategy for token-based route protection.
+
+### **Phase 4: Security, Guards & RBAC (Completed)**
+* [x] Implemented `JwtAuthGuard` for securing private endpoints (`GET /users/profile`).
+* [x] Created custom `@Roles` decorator and `RolesGuard` for role-based authorization.
+* [x] Verified strict access control (`401 Unauthorized` and `403 Forbidden` responses).
 
 ---
 
