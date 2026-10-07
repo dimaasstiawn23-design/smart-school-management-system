@@ -52,9 +52,13 @@ Enterprise-grade backend system built with NestJS, TypeScript, PostgreSQL, and D
 * [x] Implemented schedule creation restricted to administrators (`POST /schedules`).
 * [x] Added public/authenticated endpoints to view all schedules or filter them specifically by class ID (`GET /schedules/class/:classId`).
 
----
+### **Phase 9: Attendance / Kehadiran Siswa Module (Completed)**
+* [x] Created `AttendanceEntity` and `AttendanceStatus` enum (Hadir, Sakit, Izin, Alpa) with relations to User, Class, and Subject.
+* [x] Implemented attendance creation restricted to administrators (`POST /attendance`).
+* [x] Added admin endpoint to view all school attendance records (`GET /attendance`).
+* [x] Added self-service student portal endpoint (`GET /attendance/my-attendance`) to securely view individual attendance history.
 
-## 📌 API Documentation & Endpoints
+---
 
 | Method | Endpoint | Access Role | Description |
 | :--- | :--- | :--- | :--- |
@@ -70,7 +74,9 @@ Enterprise-grade backend system built with NestJS, TypeScript, PostgreSQL, and D
 | `POST` | `/schedules` | Admin | Menambah jadwal pelajaran baru |
 | `GET` | `/schedules` | Authenticated | Melihat seluruh daftar jadwal pelajaran |
 | `GET` | `/schedules/class/:classId` | Authenticated | Melihat jadwal berdasarkan kelas tertentu |
-
+| `POST` | `/attendance` | Admin | Mencatat status kehadiran siswa |
+| `GET` | `/attendance` | Admin | Melihat seluruh rekap kehadiran sekolah |
+| `GET` | `/attendance/my-attendance` | Student | Siswa melihat riwayat kehadiran pribadi |
 
 ---
 
