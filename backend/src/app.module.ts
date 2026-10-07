@@ -7,11 +7,14 @@ import { ClassesModule } from './classes/classes.module';
 import { SubjectsModule } from './subjects/subjects.module';
 import { GradeEntity } from './grades/grade.entity';
 import { GradesModule } from './grades/grades.module';
+import { ScheduleEntity } from './schedules/schedule.entity';
+import { SchedulesModule } from './schedules/schedules.module';
 // --- IMPOR ENTITAS YANG DIBUTUHKAN ---
 import { User } from './users/user.entity';
 import { Student } from './users/student.entity';
 import { ClassEntity } from './classes/class.entity';
 import { SubjectEntity } from './subjects/subject.entity';
+
 
 
 @Module({
@@ -26,12 +29,13 @@ import { SubjectEntity } from './subjects/subject.entity';
       database: process.env.DB_NAME || 'smart_school_db',
       autoLoadEntities: true, // Otomatis membaca entity tabel yang kita buat nanti
       synchronize: true, // Otomatis membuat tabel di database saat development (matikan saat production)
-      entities: [User, Student, ClassEntity, SubjectEntity, GradeEntity],
+      entities: [User, Student, ClassEntity, SubjectEntity, GradeEntity, ScheduleEntity],
     }),
     UsersModule, // <--- Daftarkan di sini
     AuthModule, // Pastikan ini ada di dalam array imports
     ClassesModule, // <--- Daftarkan di sini
     SubjectsModule, // <--- Daftarkan di sini
+    SchedulesModule, // <--- Daftarkan di sini
     GradesModule, // <--- Daftarkan di sini
   ],
   controllers: [AppController], // <--- Daftarkan di sini

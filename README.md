@@ -47,6 +47,11 @@ Enterprise-grade backend system built with NestJS, TypeScript, PostgreSQL, and D
 * [x] Implemented score validation (range 0 to 100) using `class-validator`.
 * [x] Added self-service portal endpoint (`GET /grades/my-grades`) enabling students to securely view their own academic reports using active JWT tokens.
 
+### **Phase 8: Schedules / Jadwal Pelajaran Module (Completed)**
+* [x] Created `ScheduleEntity` with `ManyToOne` relations linking classes and subjects.
+* [x] Implemented schedule creation restricted to administrators (`POST /schedules`).
+* [x] Added public/authenticated endpoints to view all schedules or filter them specifically by class ID (`GET /schedules/class/:classId`).
+
 ---
 
 ## 📌 API Documentation & Endpoints
@@ -62,6 +67,10 @@ Enterprise-grade backend system built with NestJS, TypeScript, PostgreSQL, and D
 | `POST` | `/grades` | Admin | Input nilai ujian siswa |
 | `GET` | `/grades` | Admin | Melihat seluruh rekap nilai sekolah |
 | `GET` | `/grades/my-grades` | Student | Siswa melihat rekap nilai pribadi |
+| `POST` | `/schedules` | Admin | Menambah jadwal pelajaran baru |
+| `GET` | `/schedules` | Authenticated | Melihat seluruh daftar jadwal pelajaran |
+| `GET` | `/schedules/class/:classId` | Authenticated | Melihat jadwal berdasarkan kelas tertentu |
+
 
 ---
 
