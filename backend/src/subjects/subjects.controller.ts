@@ -1,6 +1,7 @@
-import { Controller, Get, Post, Body, Param, HttpCode, HttpStatus, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Patch, Delete, Body, Param, HttpCode, HttpStatus, UseGuards } from '@nestjs/common';
 import { SubjectsService } from './subjects.service';
 import { CreateSubjectDto } from './create-subject.dto';
+import { UpdateSubjectDto } from './update-subject.dto';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { RolesGuard } from '../auth/roles.guard';
 import { Roles } from '../auth/roles.decorator';
@@ -46,6 +47,33 @@ export class SubjectsController {
       statusCode: HttpStatus.OK,
       message: 'Berhasil mengambil detail mata pelajaran.',
       data: subject,
+    };
+  }
+
+  // PATCH /subjects/:id - Hanya Admin yang boleh memperbarui mata pelajaran
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles('admin')
+  @Patch(':id')
+  @HttpCode(HttpStatus.OK)
+  async update(@Param('id') id: string, @Body() updateSubjectDto: UpdateSubjectDto) {
+    const updatedSubject = await this.subjectsService.update(id, updateSubjectDto);
+    return {
+      statusCode: HttpStatus.OK,
+      message: 'Mata pelajaran berhasil diperbarui!',
+      data: updatedSubject,
+    };
+  }
+
+  // DELETE /subjects/:id - Hanya Admin yang boleh menghapus mata pelajaran
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles('admin')
+  @Delete(':id')
+  @HttpCode(HttpStatus.OK)
+  async remove(@Param('id') id: string) {
+    const result = await this.subjectsService.remove(id);
+    return {
+      statusCode: HttpStatus.OK,
+      message: result.message,
     };
   }
 }
